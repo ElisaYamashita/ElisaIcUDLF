@@ -29,7 +29,11 @@
 
 /* Constructor */
 Effectiveness::Effectiveness(long int& n_in,
+                             #ifdef USE_OPTANE_OTHERS
+                             MemkindVector & rkLists_in,
+                             #else
                              std::vector<int>& rkLists_in,
+                             #endif
                              std::vector<std::string>& imgList_in)
 : n(n_in)
 , rkLists(rkLists_in)

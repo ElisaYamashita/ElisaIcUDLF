@@ -34,10 +34,24 @@
 #include <sstream>
 #include <fstream>
 
+#ifdef USE_OPTANE_OTHERS
+#include <memkind_allocator.h>
+#endif
+
 class Effectiveness {
     public:
+            
+            #ifdef USE_OPTANE_OTHERS
+            using MemkindAlloc = libmemkind::static_kind::allocator<int>;
+            using MemkindVector = std::vector<int, MemkindAlloc>;
+            #endif
+
             Effectiveness(long int& n_in,
+                          #ifdef USE_OPTANE_OTHERS
+                          MemkindVector & rkLists_in,
+                          #else
                           std::vector<int>& rkLists_in,
+                          #endif
                           std::vector<std::string>& imgList_in);
             //Recall
             void fillRecallsMap(std::map<int, float>& recalls, std::string recallsToCompute);
@@ -68,7 +82,12 @@ class Effectiveness {
 
             //Variables
             const long int& n;
+            
+            #ifdef USE_OPTANE_OTHERS
+            const MemkindVector & rkLists;
+            #else
             const std::vector<int>& rkLists;
+            #endif
             const std::vector<std::string>& imgList;
             std::map<std::string, std::string> classes;
             std::map<std::string, unsigned int> classesSize;

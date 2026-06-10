@@ -34,8 +34,10 @@
  */
 
 #include <iostream>
+#include <memkind_allocator.h>
 
 #include "Cprr.hpp"
+
 
 /* Constructor */
 Cprr::Cprr() {
@@ -65,13 +67,40 @@ void Cprr::checkParameters() {
 void Cprr::initDataStructuresUdl() {
     std::cout << "Initializing data structures..." << std::endl;
 
-    rkLists.resize(n*l);
-    initSparseMatrix(matrix);
+    #ifdef USE_OPTANE_OTHERS
+    std::cout << "Usando Optane para estruturas auxiliares\n";
 
-    imgRef.resize(n*l);
+    rkLists.resize(n*l); //Elisa: inicializa lista rankeada geral
+    initSparseMatrix(matrix); //Elisa: inicializa matriz esparsa com tamanho do dataset, passa como
+    //parâmetro da função o ponteiro para matrix das estruturas gerais do UDL
+
+    imgRef.resize(n*l); //Elisa: inicializa um vetor img.Ref unsigned int
     posRef.resize(n*l);
     nRef.resize(n);
 
+    // #elif defined(USE_OPTANE_MATRIX)
+    // std::cout << "Usando Optane para matriz\n";
+
+    // rkLists.resize(n*l); //Elisa: inicializa lista rankeada geral
+    // initSparseMatrix(matrix); //Elisa: inicializa matriz esparsa com tamanho do dataset, passa como
+    // //parâmetro da função o ponteiro para matrix das estruturas gerais do UDL
+
+    // imgRef.resize(n*l); //Elisa: inicializa um vetor img.Ref unsigned int
+    // posRef.resize(n*l);
+    // nRef.resize(n);
+
+
+    #else
+        //Elisa: n é o tamanho do dataset e l a profundidade da lista ligada
+        rkLists.resize(n*l); //Elisa: inicializa lista rankeada geral
+        initSparseMatrix(matrix); //Elisa: inicializa matriz esparsa com tamanho do dataset, passa como
+        //parâmetro da função o ponteiro para matrix das estruturas gerais do UDL
+
+        imgRef.resize(n*l); //Elisa: inicializa um vetor img.Ref unsigned int
+        posRef.resize(n*l);
+        nRef.resize(n);
+    #endif
+    
     std::cout << "Initialized successfully!" << std::endl;
 }
 
@@ -81,8 +110,9 @@ void Cprr::initDataStructuresFusion() {
     initDataStructuresUdl(); //init the main structures
 
     //structures used for aggregation (fusion) tasks
-    initSparseMatrix(matrixAgg);
-    rkListsAgg.resize(n);  //make sure it's empty
+    initSparseMatrix(matrixAgg);//Elisa: inicializa matriz esparsa com tamanho do dataset, passa como
+    //parâmetro da função o ponteiro para matrix de estruturtas agregadas
+    rkListsAgg.resize(n);  //make sure it's empty //Elisa: inicializa lista rankeada agregada
 
     std::cout << "Initialized successfully!" << std::endl;
 }

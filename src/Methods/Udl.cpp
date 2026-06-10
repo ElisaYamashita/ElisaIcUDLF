@@ -30,7 +30,12 @@
 #include "Udl.hpp"
 
 /* Constructor */
-Udl::Udl() {
+Udl::Udl() 
+#ifdef USE_OPTANE_OTHERS
+: memkind_alloc_{libmemkind::kinds::DEFAULT}
+        , rkLists{memkind_alloc_}
+#endif
+{
     Exec exec = Exec::getInstance();
 
     exec.getConfigVariable(udlTask, "UDL_TASK");
@@ -64,6 +69,9 @@ Udl::Udl() {
     exec.getConfigVariable(precisionsToCompute, "EFFECTIVENESS_PRECISIONS_TO_COMPUTE");
 
     exec.getConfigVariable(n, "SIZE_DATASET");
+
+
+
 }
 
 /* Runs the method implemented in the subclass and export the results if necessary */
@@ -71,11 +79,47 @@ void Udl::run() {
     loadParameters();
     checkParameters();
 
+
+    //prints Elisa
+    printf ("Antes de initDataStructuresUdl:\n"); 
+    printf ("Matriz:\n");
+    if (matrix == nullptr) { 
+        printf ("matrix nxn é null\n");
+    }
+    printf ("Lista Rankeada:\n");
+    if (rkLists.size() >= 3) {
+        std::cout << rkLists[0] << " "
+                  << rkLists[1] << " "
+                  << rkLists[2] << std::endl;
+    } else {
+        std::cout << "Vetor tem menos de 3 elementos\n";
+    }
+
+
     if (udlTask == "UDL") {
         initDataStructuresUdl();
     } else { //FUSION
         initDataStructuresFusion();
         showRkHtmlBeforeAfter = false; //there's no original ranked list in this mode
+    }
+
+    //prints Elisa
+    printf ("Depois do initDataStructuresUdl:\n");
+    printf ("Matriz:\n"); 
+    if (matrix != nullptr && n*n >= 3) {
+        std::cout << matrix[0] << " "
+            << matrix[1] << " "
+            << matrix[2] << std::endl;
+    } else {
+        std::cout << "Matriz inválida ou com menos de 3 elementos\n";
+    }
+    printf ("Lista Rankeada:\n");
+    if (rkLists.size() >= 3) {
+        std::cout << rkLists[0] << " "
+            << rkLists[1] << " "
+            << rkLists[2] << std::endl;
+    } else {
+            std::cout << "Vetor tem menos de 3 elementos\n";
     }
 
     readImagesList();
@@ -109,7 +153,27 @@ void Udl::run() {
     }
 
     if (udlTask == "UDL") {
+
         readInputFile(inputFile);
+
+        //prints Elisa
+        printf ("Depois do readInputFile:\n");
+        printf ("Matriz:\n"); 
+        if (matrix != nullptr && n*n >= 3) {
+            std::cout << matrix[0] << " "
+                      << matrix[1] << " "
+                      << matrix[2] << std::endl;
+        } else {
+                std::cout << "Matriz inválida ou com menos de 3 elementos\n";
+        }
+        printf ("Lista Rankeada:\n");
+        if (rkLists.size() >= 3) {
+            std::cout << rkLists[0] << " "
+                      << rkLists[1] << " "
+                      << rkLists[2] << std::endl;
+        } else {
+            std::cout << "Vetor tem menos de 3 elementos\n";
+        }
 
         //check if ranked lists will be exported to html with before and after
         if ( (outputFileFormat == "RK") && (outputRkFormat == "HTML" || outputRkFormat == "ALL") && (showRkHtmlBeforeAfter == true) ) {
@@ -127,6 +191,26 @@ void Udl::run() {
         }
 
         prepareInput();
+
+        //prints Elisa
+        printf ("Depois do prepareInput:\n");
+        printf ("Matriz:\n"); 
+        if (matrix != nullptr && n*n >= 3) {
+            std::cout << matrix[0] << " "
+                      << matrix[1] << " "
+                      << matrix[2] << std::endl;
+            } else {
+                std::cout << "Matriz inválida ou com menos de 3 elementos\n";
+            }
+        printf ("Lista Rankeada:\n");
+        if (rkLists.size() >= 3) {
+            std::cout << rkLists[0] << " "
+                      << rkLists[1] << " "
+                      << rkLists[2] << std::endl;
+        } else {
+            std::cout << "Vetor tem menos de 3 elementos\n";
+        }
+
     } //if it's fusion, we will do this inside the runMethod function
 
     if ((udlTask == "UDL") && (effectivenessEval)) { //this pre-evaluation is not necessary for fusion
@@ -145,6 +229,27 @@ void Udl::run() {
     if (udlTask == "UDL") {
         gettimeofday(&startTimeElapsed, NULL);
             runUdlMethod();
+
+            //prints Elisa
+            printf ("Depois do run:\n");
+            printf ("Matriz:\n"); 
+            if (matrix != nullptr && n*n >= 3) {
+                std::cout << matrix[0] << " "
+                          << matrix[1] << " "
+                          << matrix[2] << std::endl;
+            } else {
+                std::cout << "Matriz inválida ou com menos de 3 elementos\n";
+            }
+            printf ("Lista Rankeada:\n");
+            if (rkLists.size() >= 3) {
+                std::cout << rkLists[0] << " "
+                          << rkLists[1] << " "
+                          << rkLists[2] << std::endl;
+            } else {
+                std::cout << "Vetor tem menos de 3 elementos\n";
+            }
+
+
         totalTimeElapsed = Time::addTime(startTimeElapsed, totalTimeElapsed);
     } else { //FUSION
         gettimeofday(&startTimeElapsed, NULL);

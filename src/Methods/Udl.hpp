@@ -43,11 +43,21 @@
 #include "Utils/Time.hpp"
 #include "Utils/TxtFile.hpp"
 
+#ifdef USE_OPTANE_OTHERS
+#include <memkind_allocator.h>
+#endif
+
 /* Abstract class which contains functions and attributes that are common to all UDL methods */
 class Udl {
     public:
             Udl();
             void run();
+            #ifdef USE_OPTANE_OTHERS
+            using MemkindAlloc = libmemkind::static_kind::allocator<int>;
+            using MemkindVector = std::vector<int, MemkindAlloc>;
+            #endif
+
+
 
     protected:
             //general functions that ALL METHODS must implement
@@ -84,8 +94,15 @@ class Udl {
             //general structures for all methods
             long int n; //dataset size
             std::vector<std::string> imgList;
-            std::vector<int> rkLists;
-            float* matrix = NULL;
+
+            #ifdef USE_OPTANE_OTHERS
+            MemkindAlloc memkind_alloc_{libmemkind::kinds::DEFAULT};
+            MemkindVector rkLists;
+            #else
+            std::vector<int> rkLists; //Elisa: lista rankeada
+            #endif
+            
+            float* matrix = NULL;  //Elisa: matriz de similaridade ou distancia nxn
 
             //time evaluation
             timeval startTimeToDecrement;
@@ -149,7 +166,15 @@ class Udl {
 
             //rk html export
             bool showRkHtmlBeforeAfter;
+            
+            #ifdef USE_OPTANE_OTHERS
+            //MemkindAlloc memkind_alloc_{libmemkind::kinds::DEFAULT};
+            MemkindVector rkListsBefore{memkind_alloc_};
+            #else
             std::vector<int> rkListsBefore; //store the original input ranked lists if necessary
+            #endif
+            
+
 
             //rk convertion
             std::string rkFirstSorting;

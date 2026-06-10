@@ -40,6 +40,7 @@
 #include <map>
 #include <vector>
 #include <array>
+#include <memkind_allocator.h>
 
 #include "Udl.hpp"
 
@@ -78,11 +79,19 @@ class Cprr: public Udl {
             int k; //number of nearest neighbors
             int t; //number of iterations
 
+        //     #ifdef USE_OPTANE_OTHERS
+        //     libmemkind::static_kind::allocator<unsigned int> memkind_alloc{libmemkind::kinds::DEFAULT};
+        //     std::vector<unsigned int, libmemkind::static_kind::allocator<unsigned int>;
+        //     std::vector<unsigned int, libmemkind::static_kind::allocator<unsigned int>;
+        //     std::vector<unsigned int, libmemkind::static_kind::allocator<unsigned int>;
+
+        //     #else        
             //lists used to store references
             std::vector<unsigned int> imgRef;
             std::vector<unsigned int> posRef;
             std::vector<unsigned int> nRef;
-
+        //     #endif
+            
             //aggregation structures
             float* matrixAgg = NULL;
             std::vector<std::vector<int>> rkListsAgg;

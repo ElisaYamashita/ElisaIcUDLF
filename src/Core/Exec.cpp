@@ -74,6 +74,9 @@ bool Exec::parseFile(std::string filename) {
 
     std::ifstream file;
     file.open(filename);
+
+    std::cout << filename << std::endl;
+
     if (!file.is_open()) {
         std::cerr << "Configuration file not found!\n";
         return false;
@@ -92,6 +95,7 @@ bool Exec::parseFile(std::string filename) {
                 std::string variable = line.substr(0, pos);
                 std::string value = line.substr(pos+1, line.size());
                 insertElementInMap(variable, value);  //save value to variable in the map
+                //Elisa: Esse insert salva em m_variables que é estruturado como string de parâmetro seguido de string de valor
                 //std::cout << variable << " set to " << value << std::endl;
             } else {
                 std::cout << "Couldn't parse line " << lineNum << "! No attribution found!" << std::endl;
@@ -104,7 +108,7 @@ bool Exec::parseFile(std::string filename) {
     std::cout << std::endl;
 
     Validation& validation = Validation::getInstance();
-    if (!validation.validate(m_variables)) {
+    if (!validation.validate(m_variables)) { //Elisa: chama o método validation.validate e passa m_variables de parâmetro
         std::cerr << "Validation failed!" << std::endl;
         return false;
     }

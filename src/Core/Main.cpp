@@ -34,6 +34,7 @@ int main(int argc, char* argv[]) {
         filename = "config.ini"; //default filename
     } else {
         filename = argv[1];
+        std::cout << argv[1] << std::endl;
     }
 
     Exec& exec = Exec::getInstance();

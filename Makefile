@@ -5,95 +5,99 @@ OBJ       = Main.o Exec.o Validation.o Udl.o None.o Cprr.o RlRecom.o RlSim.o Con
 OBJ_DIR   = obj
 SRC_DIR   = src
 BUILD_DIR = bin
+LDFLAGS = -lmemkind
+EXTRA_FLAGS ?= 
+
+ALL_FLAGS = $(FLAGS) $(EXTRA_FLAGS)
 
 udlf: $(OBJ)
 	mkdir -p $(BUILD_DIR)
-	$(CC) $(FLAGS) $(addprefix $(OBJ_DIR)/,$(OBJ)) -o $(BUILD_DIR)/udlf
+	$(CC) $(ALL_FLAGS) $(addprefix $(OBJ_DIR)/,$(OBJ)) -o $(BUILD_DIR)/udlf $(LDFLAGS)
 
 
 #Core
 Main.o: $(SRC_DIR)/Core/Main.cpp
 	mkdir -p $(OBJ_DIR)
-	$(CC) $(FLAGS) -c $(SRC_DIR)/Core/Main.cpp -o $(OBJ_DIR)/Main.o
+	$(CC) $(ALL_FLAGS) -c $(SRC_DIR)/Core/Main.cpp -o $(OBJ_DIR)/Main.o
 
 Exec.o: $(SRC_DIR)/Core/Exec.cpp
 	mkdir -p $(OBJ_DIR)
-	$(CC) $(FLAGS) -c $(SRC_DIR)/Core/Exec.cpp -o $(OBJ_DIR)/Exec.o
+	$(CC) $(ALL_FLAGS) -c $(SRC_DIR)/Core/Exec.cpp -o $(OBJ_DIR)/Exec.o
 
 Validation.o: $(SRC_DIR)/Core/Validation.cpp
 	mkdir -p $(OBJ_DIR)
-	$(CC) $(FLAGS) -c $(SRC_DIR)/Core/Validation.cpp -o $(OBJ_DIR)/Validation.o
+	$(CC) $(ALL_FLAGS) -c $(SRC_DIR)/Core/Validation.cpp -o $(OBJ_DIR)/Validation.o
 
 #Methods
 Udl.o: $(SRC_DIR)/Methods/Udl.cpp
 	mkdir -p $(OBJ_DIR)
-	$(CC) $(FLAGS) -c $(SRC_DIR)/Methods/Udl.cpp -o $(OBJ_DIR)/Udl.o
+	$(CC) $(ALL_FLAGS) -c $(SRC_DIR)/Methods/Udl.cpp -o $(OBJ_DIR)/Udl.o $(LDFLAGS)
 
 None.o: $(SRC_DIR)/Methods/None.cpp
 	mkdir -p $(OBJ_DIR)
-	$(CC) $(FLAGS) -c $(SRC_DIR)/Methods/None.cpp -o $(OBJ_DIR)/None.o
+	$(CC) $(ALL_FLAGS) -c $(SRC_DIR)/Methods/None.cpp -o $(OBJ_DIR)/None.o
 
 Cprr.o: $(SRC_DIR)/Methods/Cprr.cpp
 	mkdir -p $(OBJ_DIR)
-	$(CC) $(FLAGS) -c $(SRC_DIR)/Methods/Cprr.cpp -o $(OBJ_DIR)/Cprr.o
+	$(CC) $(ALL_FLAGS) -c $(SRC_DIR)/Methods/Cprr.cpp -o $(OBJ_DIR)/Cprr.o $(LDFLAGS)
 
 RlRecom.o: $(SRC_DIR)/Methods/RlRecom.cpp
 	mkdir -p $(OBJ_DIR)
-	$(CC) $(FLAGS) -c $(SRC_DIR)/Methods/RlRecom.cpp -o $(OBJ_DIR)/RlRecom.o
+	$(CC) $(ALL_FLAGS) -c $(SRC_DIR)/Methods/RlRecom.cpp -o $(OBJ_DIR)/RlRecom.o
 
 RlSim.o: $(SRC_DIR)/Methods/RlSim.cpp
 	mkdir -p $(OBJ_DIR)
-	$(CC) $(FLAGS) -c $(SRC_DIR)/Methods/RlSim.cpp -o $(OBJ_DIR)/RlSim.o
+	$(CC) $(ALL_FLAGS) -c $(SRC_DIR)/Methods/RlSim.cpp -o $(OBJ_DIR)/RlSim.o
 
 Contextrr.o: $(SRC_DIR)/Methods/Contextrr.cpp
 	mkdir -p $(OBJ_DIR)
-	$(CC) $(FLAGS) -c $(SRC_DIR)/Methods/Contextrr.cpp -o $(OBJ_DIR)/Contextrr.o
+	$(CC) $(ALL_FLAGS) -c $(SRC_DIR)/Methods/Contextrr.cpp -o $(OBJ_DIR)/Contextrr.o
 
 ReckNNGraph.o: $(SRC_DIR)/Methods/ReckNNGraph.cpp
 	mkdir -p $(OBJ_DIR)
-	$(CC) $(FLAGS) -c $(SRC_DIR)/Methods/ReckNNGraph.cpp -o $(OBJ_DIR)/ReckNNGraph.o
+	$(CC) $(ALL_FLAGS) -c $(SRC_DIR)/Methods/ReckNNGraph.cpp -o $(OBJ_DIR)/ReckNNGraph.o
 
 RkGraph.o: $(SRC_DIR)/Methods/RkGraph.cpp
 	mkdir -p $(OBJ_DIR)
-	$(CC) $(FLAGS) -c $(SRC_DIR)/Methods/RkGraph.cpp -o $(OBJ_DIR)/RkGraph.o
+	$(CC) $(ALL_FLAGS) -c $(SRC_DIR)/Methods/RkGraph.cpp -o $(OBJ_DIR)/RkGraph.o
 
 CorrelationGraph.o: $(SRC_DIR)/Methods/CorrelationGraph.cpp
 	mkdir -p $(OBJ_DIR)
-	$(CC) $(FLAGS) -c $(SRC_DIR)/Methods/CorrelationGraph.cpp -o $(OBJ_DIR)/CorrelationGraph.o
+	$(CC) $(ALL_FLAGS) -c $(SRC_DIR)/Methods/CorrelationGraph.cpp -o $(OBJ_DIR)/CorrelationGraph.o
 
 LHRR.o: $(SRC_DIR)/Methods/LHRR.cpp
 	mkdir -p $(OBJ_DIR)
-	$(CC) $(FLAGS) -c $(SRC_DIR)/Methods/LHRR.cpp -o $(OBJ_DIR)/LHRR.o
+	$(CC) $(ALL_FLAGS) -c $(SRC_DIR)/Methods/LHRR.cpp -o $(OBJ_DIR)/LHRR.o
 
 BFSTree.o: $(SRC_DIR)/Methods/BFSTree.cpp
 	mkdir -p $(OBJ_DIR)
-	$(CC) $(FLAGS) -c $(SRC_DIR)/Methods/BFSTree.cpp -o $(OBJ_DIR)/BFSTree.o
+	$(CC) $(ALL_FLAGS) -c $(SRC_DIR)/Methods/BFSTree.cpp -o $(OBJ_DIR)/BFSTree.o
 
 RDPAC.o: $(SRC_DIR)/Methods/RDPAC.cpp
 	mkdir -p $(OBJ_DIR)
-	$(CC) $(FLAGS) -c $(SRC_DIR)/Methods/RDPAC.cpp -o $(OBJ_DIR)/RDPAC.o
+	$(CC) $(ALL_FLAGS) -c $(SRC_DIR)/Methods/RDPAC.cpp -o $(OBJ_DIR)/RDPAC.o
 
 RFE.o: $(SRC_DIR)/Methods/RFE.cpp
 	mkdir -p $(OBJ_DIR)
-	$(CC) $(FLAGS) -c $(SRC_DIR)/Methods/RFE.cpp -o $(OBJ_DIR)/RFE.o
+	$(CC) $(ALL_FLAGS) -c $(SRC_DIR)/Methods/RFE.cpp -o $(OBJ_DIR)/RFE.o
 
 #Evaluation
 Effectiveness.o: $(SRC_DIR)/Evaluation/Effectiveness.cpp
 	mkdir -p $(OBJ_DIR)
-	$(CC) $(FLAGS) -c $(SRC_DIR)/Evaluation/Effectiveness.cpp -o $(OBJ_DIR)/Effectiveness.o
+	$(CC) $(ALL_FLAGS) -c $(SRC_DIR)/Evaluation/Effectiveness.cpp -o $(OBJ_DIR)/Effectiveness.o $(LDFLAGS)
 
 #Utils
 Type.o: $(SRC_DIR)/Utils/Type.cpp
 	mkdir -p $(OBJ_DIR)
-	$(CC) $(FLAGS) -c $(SRC_DIR)/Utils/Type.cpp -o $(OBJ_DIR)/Type.o
+	$(CC) $(ALL_FLAGS) -c $(SRC_DIR)/Utils/Type.cpp -o $(OBJ_DIR)/Type.o
 
 Time.o: $(SRC_DIR)/Utils/Time.cpp
 	mkdir -p $(OBJ_DIR)
-	$(CC) $(FLAGS) -c $(SRC_DIR)/Utils/Time.cpp -o $(OBJ_DIR)/Time.o
+	$(CC) $(ALL_FLAGS) -c $(SRC_DIR)/Utils/Time.cpp -o $(OBJ_DIR)/Time.o
 
 TxtFile.o: $(SRC_DIR)/Utils/TxtFile.cpp
 	mkdir -p $(OBJ_DIR)
-	$(CC) $(FLAGS) -c $(SRC_DIR)/Utils/TxtFile.cpp -o $(OBJ_DIR)/TxtFile.o
+	$(CC) $(ALL_FLAGS) -c $(SRC_DIR)/Utils/TxtFile.cpp -o $(OBJ_DIR)/TxtFile.o
 
 
 clean:
