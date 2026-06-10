@@ -26,8 +26,8 @@
 
 #include <iostream>
 #include <fstream>
-
 #include "Udl.hpp"
+#include <memkind.h>
 
 /* Constructor */
 Udl::Udl() 
@@ -421,9 +421,15 @@ void Udl::generateExecutionLog() {
 void Udl::initMatrix(float*& matrix) {
     std::cout << "\t - Intializing Distance Matrix ..." << std::endl;
 
+    #ifdef USE_OPTANE_MATRIX
+    if (matrix != nullptr) {
+        memkind_free(MEMKIND_DEFAULT, matrix);
+    }
+    #else
     delete [] matrix;
     long int nN = ((long int) n)*n;
     matrix = new float[nN]();  //initialize all values to zero, but allocate memory immediately
+    #endif
 
     std::cout << "\t - Matrix Successfully Initialized ..." << std::endl;
 }
@@ -432,9 +438,13 @@ void Udl::initMatrix(float*& matrix) {
 void Udl::initSparseMatrix(float*& matrix) {
     std::cout << "\t - Intializing Sparse Distance Matrix ..." << std::endl;
 
-    delete [] matrix;
+    #ifdef USE_OPTANE_MATRIX
+    if (matrix != nullptr) {
+        memkind_free(MEMKIND_DEFAULT, matrix);
+    }
     long int nN = ((long int) n)*n;
-    matrix = new float[nN];
+    
+    matrix = static_cast<float*>(memkind_malloc(MEMKIND_DEFAULT, nN * sizeof(float)));
 
     for (long int l = 0; l < nN; l++) {
         if (matrix[l] != 0) {
@@ -442,12 +452,48 @@ void Udl::initSparseMatrix(float*& matrix) {
         }
     }
 
+    #else
+    delete [] matrix;
+    long int nN = ((long int) n)*n;
+    
+    matrix = new float[nN];
+
+    for (long int l = 0; l < nN; l++) {
+        if (matrix[l] != 0) {
+            matrix[l] = 0;
+        }
+    }
+    #endif
+
+
     std::cout << "\t - Matrix Successfully Initialized ..." << std::endl;
 }
 
+// /* Initializes a sparse sparse distance matrix in Persistent Memory using libmemkind*/
+// void Udl::initSparseMatrix_LibmemKind(float*& matrix) {
+//     std::cout << "\t - Intializing Sparse Distance Matrix in libmemkind ..." << std::endl;
+
+//     long int nN = ((long int) n)*n;
+//     matrix = static_cast<float*>(memkind_malloc(MEMKIND_DEFAULT, nN * sizeof(float)));
+
+//     for (long int l = 0; l < nN; l++) {
+//         if (matrix[l] != 0) {
+//             matrix[l] = 0;
+//         }
+//     }
+
+//     std::cout << "\t - Matrix Successfully Initialized ..." << std::endl;
+// }
+
 /* Releases data structures that aren't automatically released */
 void Udl::releaseDataStructures() {
+    #ifdef USE_OPTANE_MATRIX
+    if (matrix != nullptr) {
+        memkind_free(MEMKIND_DEFAULT, matrix);
+    }
+    #else
     delete [] matrix;
+    #endif
 }
 
 /* Reads the images list, line by line */

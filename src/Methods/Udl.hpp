@@ -45,6 +45,8 @@
 
 #ifdef USE_OPTANE_OTHERS
 #include <memkind_allocator.h>
+// #elif defined(USE_OPTANE_MATRIX)
+// #include <memkind.h>
 #endif
 
 /* Abstract class which contains functions and attributes that are common to all UDL methods */
@@ -73,6 +75,7 @@ class Udl {
             //init/release structures
             void initMatrix(float*& matrix);
             void initSparseMatrix(float*& matrix);
+            //void Udl::initSparseMatrix_LibmemKind(float*& matrix);
             void releaseDataStructures();
 
             //reading files

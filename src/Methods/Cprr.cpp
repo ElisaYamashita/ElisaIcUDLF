@@ -35,6 +35,7 @@
 
 #include <iostream>
 #include <memkind_allocator.h>
+#include <memkind.h>
 
 #include "Cprr.hpp"
 
@@ -82,7 +83,7 @@ void Cprr::initDataStructuresUdl() {
     // std::cout << "Usando Optane para matriz\n";
 
     // rkLists.resize(n*l); //Elisa: inicializa lista rankeada geral
-    // initSparseMatrix(matrix); //Elisa: inicializa matriz esparsa com tamanho do dataset, passa como
+    // initSparseMatrix_LibmemKind(matrix); //Elisa: inicializa matriz esparsa com tamanho do dataset, passa como
     // //parâmetro da função o ponteiro para matrix das estruturas gerais do UDL
 
     // imgRef.resize(n*l); //Elisa: inicializa um vetor img.Ref unsigned int
