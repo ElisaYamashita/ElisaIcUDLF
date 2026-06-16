@@ -100,7 +100,7 @@ class Udl {
 
             #ifdef USE_OPTANE_OTHERS
             MemkindAlloc memkind_alloc_{libmemkind::kinds::DEFAULT};
-            MemkindVector rkLists;
+            MemkindVector rkLists{memkind_alloc_};
             #else
             std::vector<int> rkLists; //Elisa: lista rankeada
             #endif
