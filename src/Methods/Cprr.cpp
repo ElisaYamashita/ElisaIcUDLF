@@ -68,9 +68,14 @@ void Cprr::checkParameters() {
 void Cprr::initDataStructuresUdl() {
     std::cout << "Initializing data structures..." << std::endl;
 
-    #ifdef USE_OPTANE_OTHERS
+#ifdef USE_OPTANE_OTHERS
     std::cout << "Usando Optane para estruturas auxiliares\n";
+#endif
+#ifdef USE_OPTANE_MATRIX
+    std::cout << "Usando Optane para matriz principal\n";
+#endif
 
+    /**** CODIGO EH O MESMO ****
     rkLists.resize(n*l); //Elisa: inicializa lista rankeada geral
     initSparseMatrix(matrix); //Elisa: inicializa matriz esparsa com tamanho do dataset, passa como
     //parâmetro da função o ponteiro para matrix das estruturas gerais do UDL
@@ -90,17 +95,17 @@ void Cprr::initDataStructuresUdl() {
     // posRef.resize(n*l);
     // nRef.resize(n);
 
+    ****/
 
-    #else
         //Elisa: n é o tamanho do dataset e l a profundidade da lista ligada
-        rkLists.resize(n*l); //Elisa: inicializa lista rankeada geral
-        initSparseMatrix(matrix); //Elisa: inicializa matriz esparsa com tamanho do dataset, passa como
+    rkLists.resize(n*l); //Elisa: inicializa lista rankeada geral
+    initSparseMatrix(matrix); //Elisa: inicializa matriz esparsa com tamanho do dataset, passa como
         //parâmetro da função o ponteiro para matrix das estruturas gerais do UDL
 
-        imgRef.resize(n*l); //Elisa: inicializa um vetor img.Ref unsigned int
-        posRef.resize(n*l);
-        nRef.resize(n);
-    #endif
+    imgRef.resize(n*l); //Elisa: inicializa um vetor img.Ref unsigned int
+    posRef.resize(n*l);
+    nRef.resize(n);
+    //#endif
     
     std::cout << "Initialized successfully!" << std::endl;
 }

@@ -43,7 +43,7 @@
 #include "Utils/Time.hpp"
 #include "Utils/TxtFile.hpp"
 
-#ifdef USE_OPTANE_OTHERS
+#if defined(USE_OPTANE_MATRIX) || defined(USE_OPTANE_OTHERS)
 #include <memkind_allocator.h>
 // #elif defined(USE_OPTANE_MATRIX)
 // #include <memkind.h>

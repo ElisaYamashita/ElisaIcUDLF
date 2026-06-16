@@ -34,7 +34,7 @@
 #include <sstream>
 #include <fstream>
 
-#ifdef USE_OPTANE_OTHERS
+#if defined(USE_OPTANE_MATRIX) || defined(USE_OPTANE_OTHERS)
 #include <memkind_allocator.h>
 #endif
 

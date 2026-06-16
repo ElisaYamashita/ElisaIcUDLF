@@ -81,6 +81,7 @@ void Udl::run() {
 
 
     //prints Elisa
+    /*
     printf ("Antes de initDataStructuresUdl:\n"); 
     printf ("Matriz:\n");
     if (matrix == nullptr) { 
@@ -94,6 +95,7 @@ void Udl::run() {
     } else {
         std::cout << "Vetor tem menos de 3 elementos\n";
     }
+    */
 
 
     if (udlTask == "UDL") {
@@ -104,6 +106,7 @@ void Udl::run() {
     }
 
     //prints Elisa
+    /*
     printf ("Depois do initDataStructuresUdl:\n");
     printf ("Matriz:\n"); 
     if (matrix != nullptr && n*n >= 3) {
@@ -121,6 +124,7 @@ void Udl::run() {
     } else {
             std::cout << "Vetor tem menos de 3 elementos\n";
     }
+    */
 
     readImagesList();
 
@@ -157,6 +161,7 @@ void Udl::run() {
         readInputFile(inputFile);
 
         //prints Elisa
+        /*
         printf ("Depois do readInputFile:\n");
         printf ("Matriz:\n"); 
         if (matrix != nullptr && n*n >= 3) {
@@ -174,6 +179,7 @@ void Udl::run() {
         } else {
             std::cout << "Vetor tem menos de 3 elementos\n";
         }
+        */
 
         //check if ranked lists will be exported to html with before and after
         if ( (outputFileFormat == "RK") && (outputRkFormat == "HTML" || outputRkFormat == "ALL") && (showRkHtmlBeforeAfter == true) ) {
@@ -193,6 +199,7 @@ void Udl::run() {
         prepareInput();
 
         //prints Elisa
+        /*
         printf ("Depois do prepareInput:\n");
         printf ("Matriz:\n"); 
         if (matrix != nullptr && n*n >= 3) {
@@ -210,6 +217,7 @@ void Udl::run() {
         } else {
             std::cout << "Vetor tem menos de 3 elementos\n";
         }
+        */
 
     } //if it's fusion, we will do this inside the runMethod function
 
@@ -231,6 +239,7 @@ void Udl::run() {
             runUdlMethod();
 
             //prints Elisa
+            /*
             printf ("Depois do run:\n");
             printf ("Matriz:\n"); 
             if (matrix != nullptr && n*n >= 3) {
@@ -248,6 +257,7 @@ void Udl::run() {
             } else {
                 std::cout << "Vetor tem menos de 3 elementos\n";
             }
+            */
 
 
         totalTimeElapsed = Time::addTime(startTimeElapsed, totalTimeElapsed);
@@ -425,6 +435,9 @@ void Udl::initMatrix(float*& matrix) {
     if (matrix != nullptr) {
         memkind_free(MEMKIND_DEFAULT, matrix);
     }
+    long int nN = ((long int) n)*n;
+    
+    matrix = static_cast<float*>(memkind_malloc(MEMKIND_DEFAULT, nN * sizeof(float)));
     #else
     delete [] matrix;
     long int nN = ((long int) n)*n;

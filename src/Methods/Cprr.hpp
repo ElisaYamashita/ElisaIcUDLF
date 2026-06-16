@@ -40,7 +40,6 @@
 #include <map>
 #include <vector>
 #include <array>
-#include <memkind_allocator.h>
 
 #include "Udl.hpp"
 
