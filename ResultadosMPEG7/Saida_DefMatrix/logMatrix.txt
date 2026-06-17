@@ -1,0 +1,79 @@
+ # UNSUPERVISED DISTANCE LEARNING METHODS FRAMEWORK #
+
+
+ - GENERAL INFORMATION -
+ --------------------------------------
+ Task:             UDL
+ Method:           CPRR
+ Dataset Size:     1400
+ Image List File:  /home/elisa/IC/ElisaIcUDLF/Datasets-master/Datasets/MPEG7/lists.txt
+ Image Class File: /home/elisa/IC/ElisaIcUDLF/Datasets-master/Datasets/MPEG7/classes.txt
+ Input File:       /home/elisa/IC/ElisaIcUDLF/Datasets-master/Datasets/MPEG7/rankedLists/numeric/cfd.txt
+ Input Format:     RK NUM  (automatically detected)
+ Output File:      /home/elisa/IC/ElisaIcUDLF/ResultadosMPEG7/saida_matrix
+ Output Format:    RK ALL
+ --------------------------------------
+
+
+ - METHOD PARAMETERS -
+ --------------------------------------
+ PARAM_CPRR_K = 20
+ PARAM_CPRR_L = 400
+ PARAM_CPRR_T = 5
+ --------------------------------------
+
+
+ - EVALUATION RESULTS -
+ --------------------------------------
+ * Efficiency:
+	 Total Time of the Algorithm Execution: 0.0373 s
+
+ * Effectiveness:
+ Before: 
+	 P@4		0.9786
+	 P@5		0.9667
+	 P@10		0.9061
+	 P@15		0.8368
+	 P@20		0.7559
+	 P@30		0.5416
+	 P@50		0.3462
+	 P@100		0.1826
+	 Recall@4	0.1957
+	 Recall@5	0.2417
+	 Recall@10	0.4531
+	 Recall@20	0.7559
+	 Recall@40	0.8444
+	 MAP		0.8064
+ After: 
+	 P@4		0.9648
+	 P@5		0.9609
+	 P@10		0.9499
+	 P@15		0.9363
+	 P@20		0.9040
+	 P@30		0.6195
+	 P@50		0.3810
+	 P@100		0.1936
+	 Recall@4	0.1930
+	 Recall@5	0.2402
+	 Recall@10	0.4749
+	 Recall@20	0.9040
+	 Recall@40	0.9430
+	 MAP		0.9209
+ Relative Gains: 
+	 P@4		-1.4051%
+	 P@5		-0.6059%
+	 P@10		4.8242%
+	 P@15		11.8932%
+	 P@20		19.5993%
+	 P@30		14.3849%
+	 P@50		10.0479%
+	 P@100		5.9797%
+	 Recall@4	-1.4051%
+	 Recall@5	-0.6059%
+	 Recall@10	4.8242%
+	 Recall@20	19.5993%
+	 Recall@40	11.6821%
+	 MAP		14.1987%
+ --------------------------------------
+
+ Log generated at 2026/6/16 23:4:6
